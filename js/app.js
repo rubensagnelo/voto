@@ -1,12 +1,12 @@
-
+/*
 //const tableElem = document.getElementById("table-body");
 //const candidateOptions = document.getElementById("candidate-options");
-const voteForm = document.getElementById("vote-form");
+//const voteForm = document.getElementById("vote-form");
 
 var proposals = [];
 var myAddress;
 var eleicao;
-const CONTRACT_ADDRESS = "0xe0d3ED03a3D9aa4Da2EE5566E935f99c7AEc97d2";
+const CONTRACT_ADDRESS = "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8";
 
 
 const ethEnabled = () => {
@@ -33,8 +33,7 @@ const getMyAccounts = accounts => {
 	}
 };
 
-
-/* 
+ 
 window.addEventListener('load', async function() {
 
 	if (!ethEnabled()) {
@@ -68,9 +67,9 @@ function getCandidatos(contractRef,callback)
 	});
 }
 
-*/
 
-/*
+
+
 function populaCandidatos(candidatos) {
 	candidatos.forEach((candidato, index) => {
 		// Creates a row element.
@@ -97,7 +96,7 @@ function populaCandidatos(candidatos) {
 		candidateOptions.appendChild(candidateOption);
         });
 }
-*/
+
 
 
 $("#btnVote").on('click',function(){
@@ -114,3 +113,4 @@ $("#btnVote").on('click',function(){
         	});  
 
 });
+*/

@@ -1,8 +1,39 @@
+
 const tableElem = document.getElementById("table-body");
-const candidateOptions = document.getElementById("candidate-options");
+//const candidateOptions = document.getElementById("candidate-options");
+//const voteForm = document.getElementById("vote-form");
 
 
+var proposals = [];
+var myAddress;
+var eleicao;
+const CONTRACT_ADDRESS = "0xA91e1e4423DD57692f0E4e5fc23375036a23DBb6";
 
+
+const ethEnabled = () => {
+	if (window.ethereum) {
+    		window.web3 = new Web3(window.ethereum);
+            //obj = new Web3(window.ethereum);
+    		window.ethereum.enable();
+    		return true;
+  	}
+  	return false;
+}
+
+const getMyAccounts = accounts => {
+	try {
+		if (accounts.length == 0) {
+			alert("Você não tem contas habilitadas no Metamask!");
+		} else {
+			myAddress = accounts[0];
+			accounts.forEach(async myAddress => {
+				console.log(myAddress + " : " + await window.web3.eth.getBalance(myAddress));
+			});
+		}
+	} catch(error) {
+		console.log("Erro ao obter contas...");
+	}
+};
 
 window.addEventListener('load', async function() {
 
@@ -34,8 +65,10 @@ function getCandidatos(contractRef,callback)
 			callback(proposals);
 		}
 
-	});
+	}); 
 }
+
+
 
 function populaCandidatos(candidatos) {
 	candidatos.forEach((candidato, index) => {
@@ -48,15 +81,15 @@ function populaCandidatos(candidatos) {
 		rowElem.appendChild(nameCell);        
 
 		// Creates a cell element for the name.
-		const nameCell = document.createElement("td");
-		nameCell.innerText = candidato.name;
-		rowElem.appendChild(nameCell);
+		const nameCell2 = document.createElement("td");
+		nameCell2.innerText = candidato.name;
+		rowElem.appendChild(nameCell2);
 
 		// Creates a cell element for the votes.
-		const voteCell = document.createElement("td");
-		voteCell.id = "vote-" + candidato.name; 
-		voteCell.innerText = candidato.voteCount;
-		rowElem.appendChild(voteCell);
+		const voteCell3 = document.createElement("td");
+		voteCell3.id = "vote-" + candidato.name; 
+		voteCell3.innerText = candidato.voteCount;
+		rowElem.appendChild(voteCell3);
 
 		// Adds the new row to the voting table.
 		tableElem.appendChild(rowElem);
@@ -66,5 +99,27 @@ function populaCandidatos(candidatos) {
 		candidateOption.value = index;
 		candidateOption.innerText = candidato.name;
 		candidateOptions.appendChild(candidateOption);
+        
         });
 }
+
+
+
+/*
+
+$("#btnVote").on('click',function(){
+	candidato = $("#candidate-options").children("option:selected").val();
+
+        eleicao.methods.vote(candidato).send({from: myAddress})
+	       .on('receipt',function(receipt) {
+			//getCandidatos(eleicao, populaCandidatos);
+			windows.location.reaload(true);
+		})
+		.on('error',function(error) {
+			console.log(error.message);
+               		return;     
+        	});  
+
+});
+
+*/
