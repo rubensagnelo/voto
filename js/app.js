@@ -1,13 +1,22 @@
-/*
-//const tableElem = document.getElementById("table-body");
-//const candidateOptions = document.getElementById("candidate-options");
-//const voteForm = document.getElementById("vote-form");
+
+const tableElem = document.getElementById("table-body");
+const candidateOptions = document.getElementById("candidate-options");
+const voteForm = document.getElementById("vote-form");
+const txtEnderecoDelegado = document.getElementById("txtEnderecoDelegado");
+const txtCadastroNomeEleitor = document.getElementById("txtCadastroNomeEleitor");
+const txtCadastroEnderecoEleitor = document.getElementById("txtCadastroEnderecoEleitor");
 
 var proposals = [];
 var myAddress;
 var eleicao;
-const CONTRACT_ADDRESS = "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8";
+const CONTRACT_ADDRESS = "0xaDb8784F62834c482fd0513Db74932b9B5A9d7B1";
+//"0x6440195EF1d40ca0E77d9904572e012D8F500165"; //Com addCandidato
+//"0xe0d3ED03a3D9aa4Da2EE5566E935f99c7AEc97d2";
+//"0x79C2635FdFe2Af2aC170174878DE05ae1D05f006"; //Zerado
 
+//"0xe0d3ED03a3D9aa4Da2EE5566E935f99c7AEc97d2"; //Contrato versão 24/06/2021
+
+var eleitores = [];
 
 const ethEnabled = () => {
 	if (window.ethereum) {
@@ -33,7 +42,6 @@ const getMyAccounts = accounts => {
 	}
 };
 
- 
 window.addEventListener('load', async function() {
 
 	if (!ethEnabled()) {
@@ -44,6 +52,8 @@ window.addEventListener('load', async function() {
 
 		eleicao = new web3.eth.Contract(VotingContractInterface, CONTRACT_ADDRESS);
 		getCandidatos(eleicao, populaCandidatos);
+		getEleitores(eleicao, populaEleitores);
+
 	}
 });
 
@@ -54,7 +64,7 @@ function getCandidatos(contractRef,callback)
 		for (i=0; i<count; i++) {
 			await contractRef.methods.getProposal(i).call().then((data)=>{
 				var proposal = {
-          				name : web3.utils.toUtf8(data[0]),
+          				name : data[0], //web3.utils.toUtf8(data[0]),
           				voteCount : data[1]
       				};
 				proposals.push(proposal);
@@ -68,8 +78,7 @@ function getCandidatos(contractRef,callback)
 }
 
 
-
-
+/*
 function populaCandidatos(candidatos) {
 	candidatos.forEach((candidato, index) => {
 		// Creates a row element.
@@ -96,8 +105,40 @@ function populaCandidatos(candidatos) {
 		candidateOptions.appendChild(candidateOption);
         });
 }
+*/
 
+/*
+function getEleitores(contractRef,callback)
+{
+	var numEleitores=0;
+	numEleitores = contractRef.methods.getVotersCount();
+	return numEleitores;
+}
+*/
 
+function getEleitores(contractRef,callback)
+{
+	//contractRef.methods.getProposalsCount().call().then((count)=>{
+	contractRef.methods.getVotersCount().call(async function (error, count) {
+		for (i=0; i<count; i++) {
+			await contractRef.methods.getVoters(i).call().then((data)=>{
+				var eleitor = {
+          				endereco : String(data[0]),//web3.utils.toUtf8(data[0]),
+          				nome : String(data[1])
+      				};
+				eleitores.push(eleitor);
+ 			});
+		}
+		if (callback) {
+			callback(eleitores);
+		}
+
+	});
+}
+
+function populaEleitores(eleitores) {
+	var teste = eleitores;
+}
 
 $("#btnVote").on('click',function(){
 	candidato = $("#candidate-options").children("option:selected").val();
@@ -113,4 +154,70 @@ $("#btnVote").on('click',function(){
         	});  
 
 });
+
+$("#btnVerificarHabilitacao").on('click',function(){
+	var eleitorHabilitado=0;
+
+	for (i=0; eleitores.length; i++) {
+		
+		if ($("#txtEnderecoEleitor").val()== String(eleitores[i].endereco)) {
+
+			eleitorHabilitado=1;
+		}
+
+	}
+	if (eleitorHabilitado==1) {
+		$("#areaMensagemHabilitacaoEleitor").html('Eleitor habilitado');
+	}
+	else {
+		$("#areaMensagemHabilitacaoEleitor").html('Eleitor não habilitado');
+	}	
+
+});
+
+$("#btnDelegar").on('click',function(){
+	
+	//var toEndereco = txtEnderecoDelegado.value;
+
+        eleicao.methods.delegate(txtEnderecoDelegado.value).send({from: myAddress})
+	       .on('receipt',function(receipt) {
+			windows.location.reaload(true);
+		})
+		.on('error',function(error) {
+			console.log(error.message);
+               		return;     
+        	});  
+
+});
+
+$("#btnCadastrar").on('click',function(){
+
+    eleicao.methods.giveRightToVote(txtCadastroEnderecoEleitor.value, txtCadastroNomeEleitor.value)//, txtCadastroNomeEleitor.value)
+	   .send({from: myAddress})
+	   .on('receipt',function(receipt) {
+		windows.location.reaload(true);
+	})
+	.on('error',function(error) {
+		console.log(error.message);
+        	return;     
+	});  
+
+});
+
+$("#btnFinalizar").on('click',function(){
+	
+	var txtResultadoEleicao = eleicao.methods.winnerName();
+
+	/*
+        eleicao.methods.delegate(txtEnderecoDelegado.value).send({from: myAddress})
+	       .on('receipt',function(receipt) {
+			windows.location.reaload(true);
+
+		})
+		.on('error',function(error) {
+			console.log(error.message);
+               		return;     
+        	});  
 */
+	$("#areaMensagemResultadoEleicao").html(txtResultadoEleicao);
+});
