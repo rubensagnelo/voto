@@ -77,6 +77,16 @@ function getCandidatos(contractRef,callback)
 	});
 }
 
+function addCandidato(nomeCandidato){
+    result = "";
+    try {
+        contractRef.methods.getProposalsCount().addCandidato(nomeCandidato);
+    } catch (error) {
+        result = "Erro ao incluir o candidato! Por favor tente mais tarde novamente."        
+    }
+    return result;
+}
+
 
 /*
 function populaCandidatos(candidatos) {
