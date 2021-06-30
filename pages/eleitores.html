@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -9,7 +8,14 @@
         <div class="alert alert-primary" role="alert">
             <b>ELEITOR</b>
         </div>
-
+        <table class="table table-hover table-dark">
+          <tr>
+    <td with='40%'>Delegar voto para: <input type="text" id="txtEnderecoDelegado" width="800" /></td>
+   <td with='60%'>
+      <button type="button" class="btn btn-primary" id="btnDelegar" onclick="delegar();">Delegar</button></p>
+   </td>
+  </tr> 
+</table>  
 <table id="tableMain" class="table table-hover table-dark">
     <thead>
       <tr>
@@ -22,10 +28,9 @@
     <tbody id="table-body" ></tbody>
   </table>
 <br/><br/>
-<input type="hidden" id='voto' name='voto'>
-  <div style="text-align: center; width: 100%;"><button type="button" class="btn btn-primary">Votar</button></p></div>
- 
-  <div style="text-align: center; width: 100%;"><button type="button" class="btn btn-primary">Delegar</button></p></div>
+<input type="hidden" id='hdnvoto' name='hdnvoto'>
+<div style="text-align: center; width: 100%;"><button type="button" class="btn btn-primary" id="btnVote" onclick="Votar();">Votar</button></p></div>
+
 
 </body>
 

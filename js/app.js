@@ -79,6 +79,7 @@ window.addEventListener('load', async function() {
 
 function getCandidatos(contractRef,callback)
 {
+    proposals = [];
 	//contractRef.methods.getProposalsCount().call().then((count)=>{
 	contractRef.methods.getProposalsCount().call(async function (error, count) {
 		for (i=0; i<count; i++) {
@@ -221,6 +222,7 @@ function getEleitores(contractRef,callback)
 
 function getEleitores(contractRef,callback)
 {
+    eleitores = [];
 	//contractRef.methods.getProposalsCount().call().then((count)=>{
 	contractRef.methods.getVotersCount().call(async function (error, count) {
 		for (i=0; i<count; i++) {
@@ -240,6 +242,74 @@ function getEleitores(contractRef,callback)
 
 	});
 }
+
+function verificarHabilitacaoEleitor(){
+    result = "";
+    try {
+        var eleitorHabilitado=0;
+        var indiceEleitor=0;
+ 
+        for (i=0; i<eleitores.length; i++) {
+            if (myAddress==eleitores[i].endereco){                      
+                eleitorHabilitado=1;
+                indiceEleitor=i;
+            }                                       
+        }
+        if (eleitorHabilitado==0) {
+            result = "Eleitor não está apto a votar!"
+            //alert(result);
+            return result;
+        }
+        
+    } catch (error) {
+        result = "Erro ao incluir voto! Por favor tente mais tarde novamente."        
+    }
+    return result;
+}
+
+function delegarvoto(value){
+    result = "";
+    try {
+            eleicao.methods.delegate(value).send({from: myAddress})
+               .on('receipt',function(receipt) {
+                windows.location.reaload(true);
+            })
+            .on('error',function(error) {
+                console.log(error.message);
+                return;     
+            });  
+    } catch (error) {
+        result = "Erro ao delegar voto! Por favor, tente mais tarde novamente."        
+    }
+    return result;
+}
+
+
+function votarcandiato(nome)
+{
+    rresult = "";
+    try {
+
+        result = verificarHabilitacaoEleitor();
+        if (result!=""){
+            alert(result);
+        } else{
+            eleicao.methods.vote(nome).send({from: myAddress}).on('receipt',function(receipt) {
+                //getCandidatos(eleicao, populaCandidatos);
+                windows.location.reaload(true);
+            })
+                .on('error',function(error) {
+                    console.log(error.message);
+                    return;     
+            });
+        }
+
+    } catch (error) {
+        rresult = "Erro ao votar! Por favor, tente mais tarde novamente."        
+    }
+    return rresult;
+}
+
 
 /*
 function populaEleitores(eleitores) {
@@ -264,20 +334,24 @@ $("#btnVote").on('click',function(){
 });
 */
 
+/*
 function verificarhabilitacao(){
     var eleitorHabilitado=0;
 
 	for (i=0; i<eleitores.length; i++) {
 		
         var teste = String(eleitores[i].endereco);
-		/*
+		
         if ($("#txtEnderecoEleitor").val()== String(eleitores[i].endereco)) {
 
 			eleitorHabilitado=1;
 		}
-        */
-        alert(teste);
+       
+        
 	}
+
+    */
+
     /*
 	if (eleitorHabilitado==1) {
 		$("#areaMensagemHabilitacaoEleitor").html('Eleitor habilitado');
@@ -285,10 +359,10 @@ function verificarhabilitacao(){
 	else {
 		$("#areaMensagemHabilitacaoEleitor").html('Eleitor não habilitado');
 	}
-    */	
+    	
 
 }
-
+*/
 /*
 $("#btnVerificarHabilitacao").on('click',function(){
 	var eleitorHabilitado=0;
