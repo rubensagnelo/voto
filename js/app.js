@@ -9,7 +9,7 @@ const txtCadastroEnderecoEleitor = document.getElementById("txtCadastroEnderecoE
 var proposals = [];
 var myAddress;
 var eleicao;
-const CONTRACT_ADDRESS = "0xaDb8784F62834c482fd0513Db74932b9B5A9d7B1";
+const CONTRACT_ADDRESS = "0x02c4CC7DFFb22E08424F676F98A9b971E683fBC3";
 //"0x6440195EF1d40ca0E77d9904572e012D8F500165"; //Com addCandidato
 //"0xe0d3ED03a3D9aa4Da2EE5566E935f99c7AEc97d2";
 //"0x79C2635FdFe2Af2aC170174878DE05ae1D05f006";
@@ -77,10 +77,65 @@ function getCandidatos(contractRef,callback)
 	});
 }
 
+
+function iniciareleicao(){
+    result = "";
+    try {
+//        eleicao.methods.iniciarEleicao();
+
+        eleicao.methods.iniciarEleicao().send({from: myAddress})
+        .on('receipt',function(receipt) {
+         //getCandidatos(eleicao, populaCandidatos);
+         windows.location.reaload(true);
+     })
+     .on('error',function(error) {
+         console.log(error.message);
+                    return;     
+         });  
+
+        //eleicao.methods.addCandidato(nomeCandidato);
+    } catch (error) {
+        result = "Erro ao incluir o candidato! Por favor tente mais tarde novamente."        
+    }
+    return result;
+}
+
+
+function finalizareleicao(){
+    result = "";
+    try {
+        eleicao.methods.finalizarEleicao().send({from: myAddress})
+        .on('receipt',function(receipt) {
+         //getCandidatos(eleicao, populaCandidatos);
+         windows.location.reaload(true);
+     })
+     .on('error',function(error) {
+         console.log(error.message);
+                    return;     
+         });  
+
+        //eleicao.methods.addCandidato(nomeCandidato);
+    } catch (error) {
+        result = "Erro ao incluir o candidato! Por favor tente mais tarde novamente."        
+    }
+    return result;
+}
+
+
+
 function addCandidato(nomeCandidato){
     result = "";
     try {
-        contractRef.methods.getProposalsCount().addCandidato(nomeCandidato);
+
+        eleicao.methods.addCandidato(nomeCandidato).send({from: myAddress})
+        .on('receipt',function(receipt) {
+         //getCandidatos(eleicao, populaCandidatos);
+         windows.location.reaload(true);
+     })
+     .on('error',function(error) {
+         console.log(error.message);
+                    return;     
+         });  
     } catch (error) {
         result = "Erro ao incluir o candidato! Por favor tente mais tarde novamente."        
     }
