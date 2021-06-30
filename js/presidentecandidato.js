@@ -49,7 +49,10 @@ function cadastrarcandidato(){
 
 	var nomecand = document.getElementById("nomenovocandidato");
 	var result = addCandidato(nomecand.value);
-	
+
+
+	var f = document.getElementById('ifbody');
+	f.src = f.src;
 	/*
 	if (result != "")
 	{

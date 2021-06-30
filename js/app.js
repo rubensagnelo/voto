@@ -16,6 +16,15 @@ const CONTRACT_ADDRESS = "0x02c4CC7DFFb22E08424F676F98A9b971E683fBC3";
 
 //"0xe0d3ED03a3D9aa4Da2EE5566E935f99c7AEc97d2"; //Contrato versão 24/06/2021
 
+// Rodrigo Albert Fedosi
+// 0x9E9e8e96dfBCF819f83b3B6c9f520A35FC3e4554
+
+// Rubens Agnelo Gonçalves Inacio
+// 0xCE76E6F7D62BC8bA508D9b0243bcDA1DAC1E38ad
+
+//Cintia
+//0x989F644c0AEb42643F963409FDe1A0BeF88143fb
+
 var eleitores = [];
 
 const ethEnabled = () => {
@@ -51,8 +60,19 @@ window.addEventListener('load', async function() {
 		getMyAccounts(await web3.eth.getAccounts());
 
 		eleicao = new web3.eth.Contract(VotingContractInterface, CONTRACT_ADDRESS);
-		getCandidatos(eleicao, populaCandidatos);
-		getEleitores(eleicao, populaEleitores);
+		
+        try {
+            getCandidatos(eleicao, populaCandidatos);
+        } catch (error) {
+            
+        }
+
+        try {
+            getEleitores(eleicao, populaEleitores);
+        } catch (error) {
+            
+        }
+
 
 	}
 });
@@ -143,6 +163,24 @@ function addCandidato(nomeCandidato){
 }
 
 
+function addEleitor(nome,endereco){
+    result = "";
+    try {
+        eleicao.methods.giveRightToVote(endereco, nome).send({from: myAddress})
+        .on('receipt',function(receipt) {
+         //getCandidatos(eleicao, populaCandidatos);
+         windows.location.reaload(true);
+     })
+     .on('error',function(error) {
+         console.log(error.message);
+                    return;     
+         });  
+    } catch (error) {
+        result = "Erro ao incluir o candidato! Por favor tente mais tarde novamente."        
+    }
+    return result;
+}
+
 /*
 function populaCandidatos(candidatos) {
 	candidatos.forEach((candidato, index) => {
@@ -201,9 +239,11 @@ function getEleitores(contractRef,callback)
 	});
 }
 
+/*
 function populaEleitores(eleitores) {
 	var teste = eleitores;
 }
+*/
 
 /*
 $("#btnVote").on('click',function(){
@@ -274,6 +314,8 @@ $("#btnVerificarHabilitacao").on('click',function(){
 });
 */
 
+/*
+
 $("#btnDelegar").on('click',function(){
 	
 	//var toEndereco = txtEnderecoDelegado.value;
@@ -288,6 +330,9 @@ $("#btnDelegar").on('click',function(){
         	});  
 
 });
+
+
+
 
 $("#btnCadastrar").on('click',function(){
 
@@ -317,6 +362,8 @@ $("#btnFinalizar").on('click',function(){
 			console.log(error.message);
                		return;     
         	});  
-*/
+
 	$("#areaMensagemResultadoEleicao").html(txtResultadoEleicao);
 });
+
+*/

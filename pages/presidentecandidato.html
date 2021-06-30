@@ -9,8 +9,19 @@
         <div class="alert alert-primary" role="alert">
             <b>CANDIDATOS</b>
         </div>
+        <br/><br/>
 
-<table id="tableMain" class="table table-hover table-dark">
+        <div class="input-group mb-3" >
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default" >Nome do Candidato</span>
+          </div>
+            <input type="text"  id="nomenovocandidato" name="nomenovocandidato" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+      
+        <div style="text-align: center; width: 100%;"><button type="button" class="btn btn-primary" onclick="cadastrarcandidato();">Cadastrar</button></p></div>
+        <br/><br/>
+
+<table id="tableMain" class="table table-hover table-dark" >
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -21,22 +32,15 @@
     </thead>
     <tbody id="table-body" ></tbody>
   </table>
-<br/><br/>
+
+
+<!--
 <input type="hidden" id='voto' name='voto'>
   <div class="alert alert-danger" role="alert">
     
   </div>
-
-  <div class="input-group mb-3" >
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-default" >Nome do Candidato</span>
-    </div>
-    <input type="text"  id="nomenovocandidato" name="nomenovocandidato" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-  </div>
-
-  <div style="text-align: center; width: 100%;"><button type="button" class="btn btn-primary" onclick="cadastrarcandidato();">Cadastrar</button></p></div>
-
-  <div style="text-align: center; width: 100%;"><button type="button" class="btn btn-primary" id="btnVerificarHabilitacao" name="btnVerificarHabilitacao" onclick="verificarhabilitacao();" >Verifica Habilitação</button></p></div>
+-->
+  
 </body>
 
 
