@@ -205,6 +205,7 @@ function populaEleitores(eleitores) {
 	var teste = eleitores;
 }
 
+/*
 $("#btnVote").on('click',function(){
 	candidato = $("#candidate-options").children("option:selected").val();
 
@@ -219,26 +220,59 @@ $("#btnVote").on('click',function(){
         	});  
 
 });
+*/
 
-$("#btnVerificarHabilitacao").on('click',function(){
-	var eleitorHabilitado=0;
+function verificarhabilitacao(){
+    var eleitorHabilitado=0;
 
-	for (i=0; eleitores.length; i++) {
+	for (i=0; i<eleitores.length; i++) {
 		
-		if ($("#txtEnderecoEleitor").val()== String(eleitores[i].endereco)) {
+        var teste = String(eleitores[i].endereco);
+		/*
+        if ($("#txtEnderecoEleitor").val()== String(eleitores[i].endereco)) {
 
 			eleitorHabilitado=1;
 		}
-
+        */
+        alert(teste);
 	}
+    /*
 	if (eleitorHabilitado==1) {
 		$("#areaMensagemHabilitacaoEleitor").html('Eleitor habilitado');
 	}
 	else {
 		$("#areaMensagemHabilitacaoEleitor").html('Eleitor não habilitado');
-	}	
+	}
+    */	
+
+}
+
+/*
+$("#btnVerificarHabilitacao").on('click',function(){
+	var eleitorHabilitado=0;
+
+	for (i=0; eleitores.length; i++) {
+		
+        var teste = String(eleitores[i].endereco);
+		
+        if ($("#txtEnderecoEleitor").val()== String(eleitores[i].endereco)) {
+
+			eleitorHabilitado=1;
+		}
+        
+        alert(teste);
+	}
+    
+	if (eleitorHabilitado==1) {
+		$("#areaMensagemHabilitacaoEleitor").html('Eleitor habilitado');
+	}
+	else {
+		$("#areaMensagemHabilitacaoEleitor").html('Eleitor não habilitado');
+	}
+    	
 
 });
+*/
 
 $("#btnDelegar").on('click',function(){
 	
