@@ -138,7 +138,7 @@ function stringToBytes32(string memory source) public pure returns (bytes32 resu
         
         eleitores.push(Eleitor({
                 nome: voters[voter].nome,
-                endereco: msg.sender,
+                endereco: voter,
                 weight: voters[voter].weight,
                 voted: voters[voter].voted,
                 delegate: voters[voter].delegate
@@ -184,6 +184,10 @@ function stringToBytes32(string memory source) public pure returns (bytes32 resu
         sender.voted = true;
         sender.delegate = to;
         Voter storage delegate_ = voters[to];
+        
+        voters[msg.sender].voted = true;
+        voters[msg.sender].delegate = to;
+        
         if (delegate_.voted) {
             // If the delegate already voted,
             // directly add to the number of votes
@@ -204,6 +208,8 @@ function stringToBytes32(string memory source) public pure returns (bytes32 resu
         require(!sender.voted, "Already voted.");
         sender.voted = true;
         sender.vote = proposal;
+        
+        voters[msg.sender].voted = true;
         
         // If `proposal` is out of the range of the array,
         // this will throw automatically and revert all
