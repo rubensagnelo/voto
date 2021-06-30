@@ -9,7 +9,7 @@ const txtCadastroEnderecoEleitor = document.getElementById("txtCadastroEnderecoE
 var proposals = [];
 var myAddress;
 var eleicao;
-const CONTRACT_ADDRESS = "0x02c4CC7DFFb22E08424F676F98A9b971E683fBC3";
+const CONTRACT_ADDRESS = "0x6028DDa3Ce61f34A1293b3915446fccc3dF2A569";
 //"0x6440195EF1d40ca0E77d9904572e012D8F500165"; //Com addCandidato
 //"0xe0d3ED03a3D9aa4Da2EE5566E935f99c7AEc97d2";
 //"0x79C2635FdFe2Af2aC170174878DE05ae1D05f006";
@@ -227,7 +227,9 @@ function getEleitores(contractRef,callback)
 			await contractRef.methods.getVoters(i).call().then((data)=>{
 				var eleitor = {
           				endereco : String(data[0]),//web3.utils.toUtf8(data[0]),
-          				nome : String(data[1])
+          				nome : String(data[1]),
+                        delegate : String(data[4]),
+                        voted : String(data[3])   
       				};
 				eleitores.push(eleitor);
  			});

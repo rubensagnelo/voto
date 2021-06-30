@@ -1,9 +1,15 @@
 
 
 function populaEleitores(eleitores) {
+    var delegou = "nao";
+    var votou = "nao"
 
 	for (i=0;i<eleitores.length;i++)
 	{
+
+        delegou = "nao";
+        votou = "nao"
+
 		var eleitor = eleitores[i];
 		// Creates a row element.
 		const rowElem = document.createElement("tr");
@@ -18,21 +24,30 @@ function populaEleitores(eleitores) {
 		nameCell2.innerText = eleitor.nome;
 		rowElem.appendChild(nameCell2);
 
-/*
+
 		// Delegou voto
+
+		if (eleitor.delegate!="0x0000000000000000000000000000000000000000")
+            delegou ="sim";		    
+
 		const nameCell3 = document.createElement("td");
-		nameCell3.innerText = eleitor.delegate;
+		nameCell3.innerText = delegou;
 		rowElem.appendChild(nameCell3);
 		
 		// Votou
+		if (eleitor.voted=="true")
+            votou ="sim";		    
+
+
 		const nameCell4 = document.createElement("td");
-		nameCell4.innerText = eleitor.voted;
-		rowElem.appendChild(nameCell3);
-*/
+		nameCell4.innerText = votou;
+		rowElem.appendChild(nameCell4);
+
 		// Adds the new row to the voting table.
 		tableElem.appendChild(rowElem);
 	}
 }
+
 
 
 

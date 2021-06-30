@@ -23,12 +23,12 @@ function populaCandidatos(candidatos) {
 		voteCell3.id = "vote-" + candidato.name; 
 		voteCell3.innerText = candidato.voteCount;
 		rowElem.appendChild(voteCell3);
-
+/*
 		const voteCell4 = document.createElement("td");
 		voteCell4.id = "vote-" + candidato.name; 
 		voteCell4.innerHTML = "<input type='radio' name='escolha'>";
 		rowElem.appendChild(voteCell4);
-
+*/
 
 		// Adds the new row to the voting table.
 		tableElem.appendChild(rowElem);
