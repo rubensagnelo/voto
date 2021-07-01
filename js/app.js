@@ -9,7 +9,7 @@ const txtCadastroEnderecoEleitor = document.getElementById("txtCadastroEnderecoE
 var proposals = [];
 var myAddress;
 var eleicao;
-const CONTRACT_ADDRESS = "0x4b7973E3eF56957532317eeCeE536aEEDe91F79D";
+const CONTRACT_ADDRESS = "0x858B56B5cEBE50aa7258D21E6C1e275b65708A94";
 //"0x6440195EF1d40ca0E77d9904572e012D8F500165"; //Com addCandidato
 //"0xe0d3ED03a3D9aa4Da2EE5566E935f99c7AEc97d2";
 //"0x79C2635FdFe2Af2aC170174878DE05ae1D05f006";
