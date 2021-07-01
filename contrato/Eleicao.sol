@@ -185,8 +185,6 @@ function stringToBytes32(string memory source) public pure returns (bytes32 resu
         sender.delegate = to;
         Voter storage delegate_ = voters[to];
         
-        voters[msg.sender].voted = true;
-        voters[msg.sender].delegate = to;
         
         if (delegate_.voted) {
             // If the delegate already voted,
@@ -197,6 +195,14 @@ function stringToBytes32(string memory source) public pure returns (bytes32 resu
             // add to her weight.
             delegate_.weight += sender.weight;
         }
+        
+        for (uint i = 0; i < eleitores.length; i++) {
+            if (eleitores[i].endereco==msg.sender) {
+                eleitores[i].voted = true;
+                eleitores[i].delegate = to;
+                eleitores[i].weight = sender.weight;
+            }
+        }  
     }
 
     /// Give your vote (including votes delegated to you)
@@ -208,13 +214,18 @@ function stringToBytes32(string memory source) public pure returns (bytes32 resu
         require(!sender.voted, "Already voted.");
         sender.voted = true;
         sender.vote = proposal;
-        
-        voters[msg.sender].voted = true;
+    
         
         // If `proposal` is out of the range of the array,
         // this will throw automatically and revert all
         // changes.
         proposals[proposal].voteCount += sender.weight;
+        
+        for (uint i = 0; i < eleitores.length; i++) {
+            if (eleitores[i].endereco==msg.sender) {
+                eleitores[i].voted = true;
+            }
+        } 
     }
 
     /// @dev Computes the winning proposal taking all
