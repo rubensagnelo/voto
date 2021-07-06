@@ -10,8 +10,8 @@ function populaEleitores(eleitores) {
 	for (i=0;i<eleitores.length;i++)
 	{
 
-        delegou = "nao";
-        votou = "nao"
+        delegou = "<span style='color:red'>não</span>";
+        votou = "<span style='color:red'>não</span>";
 
 		var eleitor = eleitores[i];
 		// Creates a row element.
@@ -31,19 +31,19 @@ function populaEleitores(eleitores) {
 		// Delegou voto
 
 		if (eleitor.delegate!="0x0000000000000000000000000000000000000000")
-            delegou ="sim";		    
+            delegou ="<span style='color:green'>sim</span>";		    
 
 		const nameCell3 = document.createElement("td");
-		nameCell3.innerText = delegou;
+		nameCell3.innerHTML = delegou;
 		rowElem.appendChild(nameCell3);
 		
 		// Votou
 		if (eleitor.voted=="true")
-            votou ="sim";		    
+            votou ="<span style='color:green'>sim</span>";		    
 
 
 		const nameCell4 = document.createElement("td");
-		nameCell4.innerText = votou;
+		nameCell4.innerHTML = votou;
 		rowElem.appendChild(nameCell4);
 
 		// Adds the new row to the voting table.
