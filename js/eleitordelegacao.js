@@ -1,8 +1,11 @@
+const tableElem = document.getElementById("table-body");
 
 
 function populaEleitores(eleitores) {
     var delegou = "nao";
     var votou = "nao"
+	tableElem.innerHTML = "";
+	var i=0;
 
 	for (i=0;i<eleitores.length;i++)
 	{
@@ -32,20 +35,41 @@ function populaEleitores(eleitores) {
 		// Adds the new row to the voting table.
 		tableElem.appendChild(rowElem);
 	}
+	lblrefresh.textContent = ""
 }
 
 
 function preparadelegar(endereco){
-	var cmp = document.getElementById("hdndelegacao");
-	cmp.value = endereco;
+	try {
+		var cmp = document.getElementById("hdndelegacao");
+		cmp.value = endereco;
+	} catch (error) {
+			
+	}
 }
 
 function delegar()
 {
+	try {
+		
+		var cmp = document.getElementById("hdndelegacao");
+		if (cmp.value.length>0)
+			delegarvoto(cmp.value);
+		else
+			alert("Selecione um eleitor para delegar seu voto.")
+	} catch (error) {
 
-	var cmp = document.getElementById("hdndelegacao");
-	if (cmp.value.length>0)
-        delegarvoto(cmp.value);
-    else
-        alert("Selecione um eleitor para delegar seu voto.")
+	}
+}
+
+var lblrefresh = document.getElementById("statusrefresh");
+
+function atualizar(){
+	lblrefresh.textContent = "atualizando..."
+	eleitores = [];
+	try {
+		getEleitores(eleicao, populaEleitores);
+	} catch (error) {
+		lblrefresh.value = "erro!"
+	}
 }

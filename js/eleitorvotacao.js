@@ -1,11 +1,18 @@
 
+const tableElem = document.getElementById("table-body");
+
+
 
 function populaCandidatos(candidatos) {
     
-    var i=1;
 	var index=0;
+	var candidato;
+	tableElem.innerHTML = "";
+	
+	for (i=0;i<candidatos.length;i++)
+	{		
+		candidato = candidatos[i];
 
-    candidatos.forEach((candidato, index) => {
 		// Creates a row element.
 		const rowElem = document.createElement("tr");
 
@@ -25,49 +32,57 @@ function populaCandidatos(candidatos) {
 		voteCell3.innerText = candidato.voteCount;
 		rowElem.appendChild(voteCell3);
 
-
 		const voteCell4 = document.createElement("td");
 		voteCell4.id = "vote-" + candidato.name; 
-		voteCell4.innerHTML = "<input type='radio' name='escolha' onclick=\"preparavoto('"+ index +"');\" >" ;
+		voteCell4.innerHTML = "<input type='radio' name='escolha' onclick=\"preparavoto('"+ i +"');\" >" ;
 		rowElem.appendChild(voteCell4);
-
 
 		// Adds the new row to the voting table.
 		tableElem.appendChild(rowElem);
-
-        i++;
-		index++
-
-		// Creates an option for each candidate
-		//const candidateOption = document.createElement("option");
-		//candidateOption.value = index;
-		//candidateOption.innerText = candidato.name;
-		//candidateOptions.appendChild(candidateOption);
-        
-        });
+	} 
+	lblrefresh.textContent = ""
 
 }
 
-
 function preparavoto(nome){
-	var cmpvoto = document.getElementById("hdnvoto");
-	cmpvoto.value = nome;
+	try {
+		var cmpvoto = document.getElementById("hdnvoto");
+		cmpvoto.value = nome;
+	} catch (error) {
+			
+	}
 }
 
 function Votar()
 {
-	var cmpvoto = document.getElementById("hdnvoto");
-	votarcandiato(cmpvoto.value);
-}
-
-
-function populaEleitores(eleitores) {
-    //var teste = eleitores;
+	try{
+		var cmpvoto = document.getElementById("hdnvoto");
+		votarcandiato(cmpvoto.value);
+	} catch(error){
+	}
+	atualizar();
 }
 
 function delegar(){
-	var cmpdelegar = document.getElementById("txtEnderecoDelegado");
-	delegarvoto(cmpdelegar.value);
+	try{	
+		var cmpdelegar = document.getElementById("txtEnderecoDelegado");
+		delegarvoto(cmpdelegar.value);
+	} catch(error){
+	}
+	atualizar();
+}
+
+var lblrefresh = document.getElementById("statusrefresh");
+
+function atualizar(){
+
+	lblrefresh.textContent = "atualizando..."
+	candidatos = [];
+	try {
+		getCandidatos(eleicao, populaCandidatos);
+	} catch (error) {
+		lblrefresh.value = "erro!"
+	}
 }
 
 

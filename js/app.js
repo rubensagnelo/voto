@@ -1,11 +1,4 @@
 
-const tableElem = document.getElementById("table-body");
-const candidateOptions = document.getElementById("candidate-options");
-const voteForm = document.getElementById("vote-form");
-const txtEnderecoDelegado = document.getElementById("txtEnderecoDelegado");
-const txtCadastroNomeEleitor = document.getElementById("txtCadastroNomeEleitor");
-const txtCadastroEnderecoEleitor = document.getElementById("txtCadastroEnderecoEleitor");
-
 var proposals = [];
 var myAddress;
 var eleicao;
@@ -54,7 +47,7 @@ const getMyAccounts = accounts => {
 window.addEventListener('load', async function() {
 
 	if (!ethEnabled()) {
-  		alert("Por favor, instale um navegador compatível com Ethereum ou uma extensão como o MetaMask para utilizar esse dApp!");
+  		alert("Por favor, instale um navegador compatível com Ethereum ou uma extensão como o MetaMask para utilizar esse App!");
 	}
 	else {
 		getMyAccounts(await web3.eth.getAccounts());
@@ -98,7 +91,6 @@ function getCandidatos(contractRef,callback)
 	});
 }
 
-
 function iniciareleicao(){
     result = "";
     try {
@@ -121,7 +113,6 @@ function iniciareleicao(){
     return result;
 }
 
-
 function finalizareleicao(){
     result = "";
     try {
@@ -142,8 +133,6 @@ function finalizareleicao(){
     return result;
 }
 
-
-
 function addCandidato(nomeCandidato){
     result = "";
     try {
@@ -162,7 +151,6 @@ function addCandidato(nomeCandidato){
     }
     return result;
 }
-
 
 function addEleitor(nome,endereco){
     result = "";

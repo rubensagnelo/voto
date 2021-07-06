@@ -1,3 +1,4 @@
+const tableElem = document.getElementById("table-body");
 
 
 function populaCandidatos(candidatos) {
@@ -45,29 +46,50 @@ function populaCandidatos(candidatos) {
 		//candidateOptions.appendChild(candidateOption);
         
         });
+		lblrefresh.textContent = ""
 
 }
 
 
 function preparavoto(nome){
-	var cmpvoto = document.getElementById("hdnvoto");
-	cmpvoto.value = nome;
+	try {
+		var cmpvoto = document.getElementById("hdnvoto");
+		cmpvoto.value = nome;
+	} catch (error) {
+			
+	}
+
 }
 
 function Votar()
 {
-	var cmpvoto = document.getElementById("hdnvoto");
-	votarcandiato(cmpvoto.value);
-}
-
-
-function populaEleitores(eleitores) {
-    //var teste = eleitores;
+	try {
+		var cmpvoto = document.getElementById("hdnvoto");
+		votarcandiato(cmpvoto.value);
+	} catch (error) {
+			
+	}
 }
 
 function delegar(){
-	var cmpdelegar = document.getElementById("txtEnderecoDelegado");
-	delegarvoto(cmpdelegar.value);
+	try {
+		var cmpdelegar = document.getElementById("txtEnderecoDelegado");
+		delegarvoto(cmpdelegar.value);
+	} catch (error) {
+			
+	}
 }
 
 
+var lblrefresh = document.getElementById("statusrefresh");
+
+function atualizar(){
+
+	lblrefresh.textContent = "atualizando..."
+	candidatos = [];
+	try {
+		getEleitores(eleicao, populaEleitores);
+	} catch (error) {
+		lblrefresh.value = "erro!"
+	}
+}

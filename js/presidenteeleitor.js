@@ -1,8 +1,11 @@
 
+const tableElem = document.getElementById("table-body");
+
 
 function populaEleitores(eleitores) {
     var delegou = "nao";
     var votou = "nao"
+	tableElem.innerHTML = ""
 
 	for (i=0;i<eleitores.length;i++)
 	{
@@ -46,26 +49,36 @@ function populaEleitores(eleitores) {
 		// Adds the new row to the voting table.
 		tableElem.appendChild(rowElem);
 	}
+	lblrefresh.textContent = ""
 }
-
-
 
 
 function cadastrareleitor(nome,endereco){
 
-	var nomeeleit = document.getElementById("nomenovoeleitor");
-	var enderecoeleit = document.getElementById("endereconovoeleitor");
+	try {
+		var nomeeleit = document.getElementById("nomenovoeleitor");
+		var enderecoeleit = document.getElementById("endereconovoeleitor");
 
-	var nome = addEleitor(nomeeleit.value,  enderecoeleit.value);
+		var nome = addEleitor(nomeeleit.value,  enderecoeleit.value);
 
-	var f = document.getElementById('ifbody');
-	f.src = f.src;
-
-
-/*
-	if (result != "")
-	{
-
+		var f = document.getElementById('ifbody');
+		f.src = f.src;
+		
+	} catch (error) {
+			
 	}
-*/
+	atualizar();
+
+}
+
+var lblrefresh = document.getElementById("statusrefresh");
+
+function atualizar(){
+	lblrefresh.textContent = "atualizando..."
+	eleitores = [];
+	try {
+		getEleitores(eleicao, populaEleitores);
+	} catch (error) {
+		lblrefresh.textContent = "erro!"
+	}
 }

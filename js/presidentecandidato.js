@@ -1,8 +1,10 @@
+const tableElem = document.getElementById("table-body");
 
 
 function populaCandidatos(candidatos) {
     
     var i=1;
+	tableElem.innerHTML = ""
 
     candidatos.forEach((candidato, index) => {
 		// Creates a row element.
@@ -23,42 +25,41 @@ function populaCandidatos(candidatos) {
 		voteCell3.id = "vote-" + candidato.name; 
 		voteCell3.innerText = candidato.voteCount;
 		rowElem.appendChild(voteCell3);
-/*
-		const voteCell4 = document.createElement("td");
-		voteCell4.id = "vote-" + candidato.name; 
-		voteCell4.innerHTML = "<input type='radio' name='escolha'>";
-		rowElem.appendChild(voteCell4);
-*/
 
 		// Adds the new row to the voting table.
 		tableElem.appendChild(rowElem);
 
         i++;
-
-		// Creates an option for each candidate
-		//const candidateOption = document.createElement("option");
-		//candidateOption.value = index;
-		//candidateOption.innerText = candidato.name;
-		//candidateOptions.appendChild(candidateOption);
         
-        });
+    });
+	lblrefresh.textContent = ""
 
 }
 
 function cadastrarcandidato(){
 
-	var nomecand = document.getElementById("nomenovocandidato");
-	var result = addCandidato(nomecand.value);
+	try{
+		var nomecand = document.getElementById("nomenovocandidato");
+		var result = addCandidato(nomecand.value);
 
-
-	var f = document.getElementById('ifbody');
-	f.src = f.src;
-	/*
-	if (result != "")
-	{
+		var f = document.getElementById('ifbody');
+		f.src = f.src;
+	} catch(erro){
 
 	}
-	*/
+	atualizar()
+}
 
 
+var lblrefresh = document.getElementById("statusrefresh");
+
+function atualizar(){
+
+	lblrefresh.textContent = "atualizando..."
+	candidatos = [];
+	try {
+		getCandidatos(eleicao, populaCandidatos);
+	} catch (error) {
+		lblrefresh.textContent = "erro..."
+	}
 }
